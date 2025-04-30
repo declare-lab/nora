@@ -4,6 +4,9 @@
 
 <div align="center">
   <img src="assets/nora-logo.png" alt="TangoFluxOpener" width="200" />
+  
+  [![Static Badge](https://img.shields.io/badge/nora-demos?label=nora-demos&link=http%3A%2F%2Fdeclare-lab.github.io%2Fnora)](http://declare-lab.github.io/nora) [![Static Badge](https://img.shields.io/badge/nora-checkpoints?label=nora-checkpoints&link=https%3A%2F%2Fhuggingface.co%2Fcollections%2Fdeclare-lab%2Fnora-6811ba3e820ef362d9eca281)](https://huggingface.co/collections/declare-lab/nora-6811ba3e820ef362d9eca281)  [![Static Badge](https://img.shields.io/badge/Read_the_paper-Arxiv?link=https%3A%2F%2Fwww.arxiv.org%2Fabs%2F2504.19854)](https://www.arxiv.org/abs/2504.19854)
+  
 </div>
 
 # NORA in Action
