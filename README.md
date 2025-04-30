@@ -17,7 +17,11 @@ We are releasing some of the videos recorded during experiments showing how NORA
 # Getting Started For Inference
 We provide a lightweight interface with minimal dependencies to get started with loading and running Nora for inference.
 ```bash
+git clone https://github.com/declare-lab/nora.git
 cd inference
+# Create and activate conda environment
+conda create -n nora python=3.10 -y
+conda activate nora
 pip install -r requirements.txt
 ```
 For example, to load Nora for zero-shot instruction following in the BridgeData V2 environments with a WidowX robot:
@@ -39,6 +43,26 @@ actions = nora.inference(
 # Execute...
 robot.act(action, ...)
 ```
+
+# How to Pretrain Nora/ Finetune nora
+```bash
+git clone https://github.com/declare-lab/nora.git
+cd training
+# Create and activate conda environment
+conda create -n nora_train python=3.10 -y
+conda activate nora_train
+pip install -r requirements.txt
+```
+Our repository make use of huggingface's accelerate library for package from Hugging Face for multi-GPU training. Set up your own accelerator config base on your cluster's configuration. Model hyperparameters/settings are stored in the TrainingConfig in train.py. 
+
+Once you have set the correct data path etcs, you can simply train nora with the following command!
+```bash
+accelerate launch train.py --config_file='your_accelerator_accelerate_config.yaml'
+```
+
+
+# Acknowledgement
+This repository is built based on [OpenVLA](https://github.com/openvla/openvla), [transformers](https://github.com/huggingface/transformers), [accelerate](https://github.com/huggingface/accelerate), [Qwen2.5 VL](https://github.com/QwenLM/Qwen2.5-VL). Thanks for their contributions!
 
 ## Citation
 ```
