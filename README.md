@@ -40,6 +40,17 @@ actions = nora.inference(
 robot.act(action, ...)
 ```
 
-
+## Citation
+```
+@misc{hung2025norasmallopensourcedgeneralist,
+      title={NORA: A Small Open-Sourced Generalist Vision Language Action Model for Embodied Tasks}, 
+      author={Chia-Yu Hung and Qi Sun and Pengfei Hong and Amir Zadeh and Chuan Li and U-Xuan Tan and Navonil Majumder and Soujanya Poria},
+      year={2025},
+      eprint={2504.19854},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2504.19854}, 
+}
+```
 
 
