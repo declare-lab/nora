@@ -10,7 +10,7 @@
 </div>
 
 # NORA in Action
-We are releasing some of the videos recorded during experiments showing how NORA performs real-world tasks with the WidowX robot -- [WidowX Demos](https://declare-lab.github.io/nora).
+We are releasing some of the videos recorded during experiments showing how NORA performs real-world tasks with the WidowX robot -- [WidowX Demos](https://declare-lab.github.io/nora#demos).
 
 # Checkpoints
 [Model weights on Huggingface](https://huggingface.co/collections/declare-lab/nora-6811ba3e820ef362d9eca281)
