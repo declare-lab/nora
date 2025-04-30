@@ -9,12 +9,12 @@
   
 </div>
 
-# NORA in Action
+## NORA in Action
 We are releasing some of the videos recorded during experiments showing how NORA performs real-world tasks with the WidowX robot -- [WidowX Demos](https://declare-lab.github.io/nora#demos).
 
-# Checkpoints
+## Checkpoints
 [Model weights on Huggingface](https://huggingface.co/collections/declare-lab/nora-6811ba3e820ef362d9eca281)
-# Getting Started For Inference
+## Getting Started For Inference
 We provide a lightweight interface with minimal dependencies to get started with loading and running Nora for inference.
 ```bash
 git clone https://github.com/declare-lab/nora.git
@@ -44,7 +44,7 @@ actions = nora.inference(
 robot.act(action, ...)
 ```
 
-# How to Pretrain Nora/ Finetune nora
+## How to Pretrain Nora/ Finetune nora
 ```bash
 git clone https://github.com/declare-lab/nora.git
 cd training
@@ -54,15 +54,15 @@ conda activate nora_train
 pip install -r requirements.txt
 ```
 Our repository make use of huggingface's accelerate library for package from Hugging Face for multi-GPU training. Set up your own accelerator config base on your cluster's configuration. Model hyperparameters/settings are stored in the TrainingConfig in train.py. 
-
+To download the dataset for training, you can refer to [Open X-Embodiment (OXE) mixture](https://robotics-transformer-x.github.io/) for details. Our dataset structure uses the same RLDS format used by [OpenVLA](https://github.com/openvla/openvla) training. You can also check OpenVLA's github for more information .
 Once you have set the correct data path etcs, you can simply train nora with the following command!
 ```bash
 accelerate launch train.py --config_file='your_accelerator_accelerate_config.yaml'
 ```
 
 
-# Acknowledgement
-This repository is built based on [OpenVLA](https://github.com/openvla/openvla), [transformers](https://github.com/huggingface/transformers), [accelerate](https://github.com/huggingface/accelerate), [Qwen2.5 VL](https://github.com/QwenLM/Qwen2.5-VL). Thanks for their contributions!
+## Acknowledgement
+This repository is built based on [OpenVLA](https://github.com/openvla/openvla), [Open X-Embodiment](https://github.com/google-deepmind/open_x_embodiment?tab=readme-ov-file),[transformers](https://github.com/huggingface/transformers), [accelerate](https://github.com/huggingface/accelerate), [Qwen2.5 VL](https://github.com/QwenLM/Qwen2.5-VL). Thanks!
 
 ## Citation
 ```
