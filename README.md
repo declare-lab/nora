@@ -2,9 +2,10 @@
 
 Training code and more examples will be released soon.
 
-
+# Checkpoints
+[Model weights on Huggingface](https://huggingface.co/collections/declare-lab/nora-6811ba3e820ef362d9eca281)
 # Getting Started For Inference
-To get started with loading and running Nora for inference, we provide a lightweight interface that with minimal dependencies.
+We provide a lightweight interface with minimal dependencies to get started with loading and running Nora for inference.
 ```bash
 cd inference
 pip install -r requirements.txt
