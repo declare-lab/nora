@@ -1,0 +1,16 @@
+tensorflow==2.15.0
+tensorflow_datasets==4.9.3
+tensorflow_graphics==2021.12.3
+dlimp @ git+https://github.com/moojink/dlimp_openvla
+torch==2.4.0
+transformers==4.50.0
+qwen_vl_utils
+torchvision==0.19.0
+accelerate==1.5.2
+wandb
+flash-attn==2.6.1
+scipy
+pillow
+safetensors
+numpy==1.26.4
+
