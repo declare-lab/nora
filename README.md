@@ -1,6 +1,10 @@
-# NORA: Neural Orchestration for Robotics Autonomy.
+# NORA: Neural Orchestration for Robotics Autonomy
 
-Training code and more examples will be released soon.
+🔥 Training code and more examples will be released soon.
+
+<div align="center">
+  <img src="assets/nora-logo.png" alt="TangoFluxOpener" width="200" />
+</div>
 
 # NORA in Action
 We are releasing some of the videos recorded during experiments showing how NORA performs real-world tasks with the WidowX robot -- [WindowX Demos](https://declare-lab.github.io/nora).
