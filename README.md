@@ -1,6 +1,6 @@
 # NORA: Neural Orchestration for Robotics Autonomy
 
-🔥 Training code and more examples will be released soon.
+🔥 Training scripts have been released.
 
 <div align="center">
   <img src="assets/nora-logo.png" alt="TangoFluxOpener" width="500" />
