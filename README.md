@@ -1,4 +1,4 @@
-# NORA: Neural Orchestration for Robotics Autonomy
+# NORA: Neural Orchestrator for Robotics Autonomy
 
 🔥 Training scripts have been released.
 
