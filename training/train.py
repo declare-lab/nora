@@ -296,7 +296,8 @@ def train(config: TrainingConfig):
     # Save final checkpoint
     if accelerator.is_main_process:
         accelerator.save_state(os.path.join(config.output_dir, f"steps_{completed_steps}"))
-        logger.info(f"Training finished. Final checkpoint saved at {os.path.join(config.output_dir, f"steps_{completed_steps}"}")
+        checkpoint_path = os.path.join(config.output_dir, f"steps_{completed_steps}")
+        logger.info(f"Training finished. Final checkpoint saved at {checkpoint_path}")
         wandb.finish()
 
 def main():
