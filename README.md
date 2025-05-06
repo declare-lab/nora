@@ -64,7 +64,8 @@ Once you have set the correct data path etcs, you can simply train nora with the
 ```bash
 accelerate launch train.py --config_file='your_accelerator_accelerate_config.yaml'
 ```
-
+## ⚠️ Finetune with Action Chunking (Important)
+To finetune NORA-LONG/NORA with different action horizon length, you will have to modify the future action window size as shown below https://github.com/declare-lab/nora/blob/5ad1658aa41c87e4cbb2f9da3f73b62840070280/training/datasets/datasets.py#L132. 
 
 ## Acknowledgement
 This repository is built based on [OpenVLA](https://github.com/openvla/openvla), [Open X-Embodiment](https://github.com/google-deepmind/open_x_embodiment?tab=readme-ov-file),[transformers](https://github.com/huggingface/transformers), [accelerate](https://github.com/huggingface/accelerate), [Qwen2.5 VL](https://github.com/QwenLM/Qwen2.5-VL). Thanks!
