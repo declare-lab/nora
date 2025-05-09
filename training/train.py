@@ -208,8 +208,8 @@ def train(config: TrainingConfig):
     )
 
     # Prepare everything with Accelerator
-    model, optimizer, train_dataloader, lr_scheduler = accelerator.prepare(
-        model, optimizer, train_dataloader, lr_scheduler
+    model, optimizer, train_dataloader = accelerator.prepare(
+        model, optimizer, train_dataloader
     )
 
     # Resume from checkpoint if provided
