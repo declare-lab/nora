@@ -67,6 +67,15 @@ accelerate launch train.py --config_file='your_accelerator_accelerate_config.yam
 ## ⚠️ Finetune with Action Chunking (Important)
 To finetune NORA-LONG/NORA with different action horizon length, you will have to modify the future action window size as shown below https://github.com/declare-lab/nora/blob/5ad1658aa41c87e4cbb2f9da3f73b62840070280/training/datasets/datasets.py#L132. 
 
+## Evaluating Nora on WidowX BridgeV2
+We use OpenVLA's codebase to peform evaluation on Widow X BridgeV2. Please check OpenVLA's github repository on instructions how to set up WidowX robot server for BridgeData V2  evaluations. 
+[https://github.com/openvla/openvla/tree/main?tab=readme-ov-file#evaluating-openvla](https://github.com/openvla/openvla/tree/main?tab=readme-ov-file#bridgedata-v2-widowx-evaluations)
+
+After setting up the Widow X's robot server, you can open another terminal window to run the Nora policy evaluation script:
+```python
+cd experiments/bridge/
+python run_widowx.py
+```
 ## Acknowledgement
 This repository is built based on [OpenVLA](https://github.com/openvla/openvla), [Open X-Embodiment](https://github.com/google-deepmind/open_x_embodiment?tab=readme-ov-file),[transformers](https://github.com/huggingface/transformers), [accelerate](https://github.com/huggingface/accelerate), [Qwen2.5 VL](https://github.com/QwenLM/Qwen2.5-VL). Thanks!
 
