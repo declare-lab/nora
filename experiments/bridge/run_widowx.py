@@ -2,7 +2,7 @@ import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Union
-from nora_utils import Nora
+from experiments.nora_utils import Nora
 import draccus
 from bridge_utils import (
     get_next_task_label,

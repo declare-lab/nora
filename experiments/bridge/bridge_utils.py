@@ -1,3 +1,8 @@
+'''
+Copied over from the OpenVLA eval code linked below, with some modifications:
+https://github.com/openvla/openvla/blob/main/experiments/robot/bridge/widowx_env.py
+'''
+
 import os
 import sys
 import time
@@ -14,6 +19,8 @@ from qwen_vl_utils import process_vision_info
 
 from widowx_envs.widowx_env_service import WidowXClient, WidowXConfigs
 
+from collections import deque
+import numpy as np
 
 sys.path.append(".")
 
@@ -25,47 +32,8 @@ DEVICE = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("
 np.set_printoptions(formatter={"float": lambda x: "{0:0.2f}".format(x)})
 
 
-from collections import deque
-import numpy as np
 
 
-
-def smooth_across_chunk_adaptive_row(action_chunk, alpha=0.0):
-    """
-    Smooths across an entire chunk of actions (5, 7) to produce a single (1, 7) action
-    (row vector) using adaptive weighting based on cosine similarity.
-
-    Args:
-        action_chunk (np.ndarray): A NumPy array of shape (5, 7).
-        alpha (float): The alpha value to control the influence of similarity.
-
-    Returns:
-        np.ndarray: A single ensembled action of shape (1, 7).
-    """
-    num_actions = action_chunk.shape[0]
-    if num_actions == 0:
-        return np.zeros((1, action_chunk.shape[-1])) if action_chunk.ndim > 1 else np.zeros((1, 7))
-
-    # Use the last action in the chunk as the reference
-    reference_action = action_chunk[-1]
-    all_actions = action_chunk
-
-    # Calculate cosine similarity between the reference and all actions in the chunk
-    similarities = np.zeros(num_actions)
-    norm_reference = np.linalg.norm(reference_action)
-    for i in range(num_actions):
-        norm_action = np.linalg.norm(all_actions[i])
-        dot_product = np.sum(reference_action * all_actions[i])
-        similarities[i] = dot_product / (norm_reference * norm_action + 1e-7)
-
-    # Compute weights based on cosine similarity
-    weights = np.exp(alpha * similarities)
-    weights = weights / np.sum(weights)
-
-    # Compute the weighted average across all actions in the chunk
-    smoothed_action = np.sum(weights[:, None] * all_actions, axis=0)
-
-    return smoothed_action.reshape(1, -1)  # Reshape to (1, 7)
 
     
 def state_to_eep(xyz_coor, zangle: float):

@@ -190,7 +190,6 @@ class Nora:
         # Decode the action token using the fast tokenizer
         # The token ID needs to be map back to the range expected by the fast tokenizer decoder
 
-        
        
         output_action = self.fast_tokenizer.decode([generated_ids[0][start_idx] - self._ACTION_TOKEN_MIN])
         
