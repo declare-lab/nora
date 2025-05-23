@@ -1,6 +1,7 @@
 # NORA: Neural Orchestrator for Robotics Autonomy
 
 🔥 All the eval scripts and model checkpoints have been released.
+
 🔥 Training scripts have been released.
 
 <div align="center">
