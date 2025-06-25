@@ -276,9 +276,8 @@ def train(config: TrainingConfig):
 
             # Checkpointing
             if completed_steps% config.checkpoint_save_frequency == 0 and completed_steps > 0:
+                accelerator.save_state(os.path.join(config.output_dir, f"steps_{completed_steps}"))
                 if accelerator.is_main_process:
-                    accelerator.save_state(os.path.join(config.output_dir, f"steps_{completed_steps}"))
-                    
                     
                     summary_data = {"steps": completed_steps, "train_loss": total_loss/config.checkpoint_save_frequency}
                     with open(os.path.join(config.output_dir, "summary.jsonl"), "a") as f:
@@ -292,10 +291,10 @@ def train(config: TrainingConfig):
                 break
 
 
-
     # Save final checkpoint
+    accelerator.save_state(os.path.join(config.output_dir, f"steps_{completed_steps}"))
     if accelerator.is_main_process:
-        accelerator.save_state(os.path.join(config.output_dir, f"steps_{completed_steps}"))
+        
         checkpoint_path = os.path.join(config.output_dir, f"steps_{completed_steps}")
         logger.info(f"Training finished. Final checkpoint saved at {checkpoint_path}")
         wandb.finish()
