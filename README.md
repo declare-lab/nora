@@ -4,6 +4,8 @@
 
 🔥 Training scripts have been released.
 
+🔥 Now supports Lerobot dataset format for training!
+
 <div align="center">
   <img src="assets/nora-logo.png" alt="TangoFluxOpener" width="500" />
   
@@ -51,7 +53,7 @@ actions = nora.inference(
 robot.act(action, ...)
 ```
 
-## How to Pretrain Nora/ Finetune nora
+## How to Pretrain Nora/ Finetune nora in RLDSDataset
 ```bash
 git clone https://github.com/declare-lab/nora.git
 cd training
@@ -64,7 +66,7 @@ Our repository make use of huggingface's accelerate library for package from Hug
 To download the dataset for training, you can refer to [Open X-Embodiment (OXE) mixture](https://robotics-transformer-x.github.io/) for details. Our dataset structure uses the same RLDS format used by [OpenVLA](https://github.com/openvla/openvla) training. You can also check OpenVLA's github for more information .
 Once you have set the correct data path etcs, you can simply train nora with the following command!
 ```bash
-accelerate launch train.py --config_file='your_accelerator_accelerate_config.yaml'
+accelerate launch --config_file='your_accelerator_accelerate_config.yaml train.py'
 ```
 ## ⚠️ Finetune with Action Chunking (Important)
 To finetune NORA-LONG/NORA with different action horizon length, you will have to modify the future action window size as shown below https://github.com/declare-lab/nora/blob/5ad1658aa41c87e4cbb2f9da3f73b62840070280/training/datasets/datasets.py#L132. 
@@ -78,6 +80,22 @@ After setting up the Widow X's robot server, you can open another terminal windo
 cd experiments/bridge/
 python run_widowx.py
 ```
+
+
+## How to Pretrain Nora/ Finetune nora in Lerobot dataset
+As of now, we are using a different version of torch when finetuning with Lerobot dataset due to Lerobot expects torchvision>=0.21.0.
+```bash
+git clone https://github.com/declare-lab/nora.git
+cd lerobot_training
+# Create and activate conda environment
+conda create -n nora_lerobot python=3.10 -y
+conda activate nora_lerobot
+pip install -r lerobot_requirements.txt
+```
+Model hyperparameters/settings are stored in the TrainingConfig in lerobot_training.py. You can specify the path to the corresponding Lerobot dataset you wish to finetune Nora on. Do note that Nora is pretrained on 7 DoF action space (6+1 grippler action), finetuning on other action space may not work well. 
+
+Note that in Nora's pretraining, grippler action is being flipped and normalized to [0, 1] (0 = close, 1 = open), whereas some dataset  such as LIBERO have (-1 = open, +1 = close). The invert_grippler_action flag in TrainingConfig will map grippler action from [-1,1] to [0,1].
+
 ## Acknowledgement
 This repository is built based on [OpenVLA](https://github.com/openvla/openvla), [Open X-Embodiment](https://github.com/google-deepmind/open_x_embodiment?tab=readme-ov-file),[transformers](https://github.com/huggingface/transformers), [accelerate](https://github.com/huggingface/accelerate), [Qwen2.5 VL](https://github.com/QwenLM/Qwen2.5-VL). Thanks!
 
