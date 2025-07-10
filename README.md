@@ -96,6 +96,42 @@ Model hyperparameters/settings are stored in the TrainingConfig in lerobot_train
 
 Note that in Nora's pretraining, grippler action is being flipped and normalized to [0, 1] (0 = close, 1 = open), whereas some dataset  such as LIBERO have (-1 = open, +1 = close). The invert_grippler_action flag in TrainingConfig will map grippler action from [-1,1] to [0,1].
 
+You can also pass in a Lerobot Unnormalizer for action decoding
+```
+from lerobot.datasets.lerobot_dataset import LeRobotDataset, LeRobotDatasetMetadata
+from lerobot.configs.types import  NormalizationMode, PolicyFeature
+from lerobot.policies.normalize import (
+    Unnormalize,
+)
+
+metadata = LeRobotDatasetMetadata('lerobot/libero_object_image')
+stats = metadata.stats
+
+features = {
+            'action': PolicyFeature(shape=stats['action']['mean'].shape, type='action')
+        }
+norm_map = {
+    'action': NormalizationMode.MIN_MAX,
+}
+unnormalize = Unnormalize(features=features, norm_map=norm_map, stats=stats)
+
+image: Image.Image = camera(...)
+instruction: str = <INSTRUCTION>
+# Predict Action (7-DoF; un-normalize for BridgeData V2)
+actions = nora.inference(
+    image=image,  # Dummy image
+    instruction=instruction,
+    unnorm_key=None,  # Optional, specify if needed
+    unnormalizer=unnormalize
+)
+
+# OPTIONAL. If your environment expect [-1,1] range and you train with invert_grippler_action=True, you will need to map back from [0,1] to [-1,1]
+# actions = normalize_gripper_action(actions, binarize=True)
+# actions = invert_gripper_action(actions)
+
+
+
+```
 ## Acknowledgement
 This repository is built based on [OpenVLA](https://github.com/openvla/openvla), [Open X-Embodiment](https://github.com/google-deepmind/open_x_embodiment?tab=readme-ov-file),[transformers](https://github.com/huggingface/transformers), [accelerate](https://github.com/huggingface/accelerate), [Qwen2.5 VL](https://github.com/QwenLM/Qwen2.5-VL). Thanks!
 
