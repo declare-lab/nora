@@ -1,9 +1,6 @@
 
-
 import os
-import json
 import logging
-from pathlib import Path
 from typing import List, Dict, Any, Callable, Optional
 
 import torch
@@ -16,15 +13,12 @@ from transformers import AutoProcessor, PreTrainedTokenizerBase, Qwen2_5_VLForCo
 from transformers import SchedulerType, get_scheduler
 
 from lerobot.datasets.lerobot_dataset import LeRobotDataset, LeRobotDatasetMetadata
-#from lerobot_normalization import Normalize, PolicyFeature,NormalizationMode
 from lerobot.configs.types import  NormalizationMode, PolicyFeature
 from lerobot.policies.normalize import (
     Normalize,
     Unnormalize,
 )
-import safetensors
 from qwen_vl_utils import process_vision_info
-import math
 import numpy as np
 from tqdm import tqdm
 
@@ -44,10 +38,10 @@ class TrainingConfig:
         gradient_accumulation_steps: int = 1,
         num_warmup_steps: int = 1000,
         max_train_steps: int = 60000,
-        output_dir: str = './nora_finetune_spatial_mapped',
-        resume_from_checkpoint: str = './nora_finetune_spatial_mapped/steps_40000',
+        output_dir: str = './nora_finetune_object',
+        resume_from_checkpoint: str = '',
         load_model_weights: Optional[str] = None,
-        lerobot_dataset_repo_id: str = "lerobot/libero_spatial_image",
+        lerobot_dataset_repo_id: str = "lerobot/libero_object_image",
         wandb_project_name: str = "Nora VLA with LeRobotDataset",
         checkpoint_save_frequency: int = 20000,
         logging_frequency: int = 100,
@@ -111,7 +105,7 @@ def inverse_transform_gripper_action(action, binarized_input=True):
         # Just map -1 to 0 and +1 to 1. Note that the previous line we have already flipped the sign.
         action[..., -1] = torch.where(action[..., -1] == -1, 0.0, 1.0)
     else:
-        # If not binarized, the inverse of y = 2x - 1 is x = (y + 1) / 2
+        
         action[..., -1] = (action[..., -1] + 1) / 2
 
     return action
