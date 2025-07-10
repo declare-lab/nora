@@ -7,6 +7,34 @@ from qwen_vl_utils import process_vision_info
 from huggingface_hub import hf_hub_download
 import json
 
+def normalize_gripper_action(action, binarize=True):
+    """
+    Changes gripper action (last dimension of action vector) from [0,1] to [-1,+1].
+    Necessary for some environments (not Bridge) because the dataset wrapper standardizes gripper actions to [0,1].
+    Note that unlike the other action dimensions, the gripper action is not normalized to [-1,+1] by default by
+    the dataset wrapper.
+
+    Normalization formula: y = 2 * (x - orig_low) / (orig_high - orig_low) - 1
+    """
+    # Just normalize the last action to [-1,+1].
+    orig_low, orig_high = 0.0, 1.0
+    action[..., -1] = 2 * (action[..., -1] - orig_low) / (orig_high - orig_low) - 1
+
+    if binarize:
+        # Binarize to -1 or +1.
+        action[..., -1] = np.sign(action[..., -1])
+
+    return action
+
+def invert_gripper_action(action):
+    """
+    Flips the sign of the gripper action (last dimension of action vector).
+    This is necessary for some environments where -1 = open, +1 = close, since
+    the RLDS dataloader aligns gripper actions such that 0 = close, 1 = open.
+    """
+    action[..., -1] = action[..., -1] * -1.0
+    return action
+
 class Nora:
     
     # Define action token range and normalization bounds as class attributes
@@ -108,15 +136,17 @@ class Nora:
             raise RuntimeError(f"Error loading model from {model_path}: {e}")
 
         print("Model and processors loaded successfully.")
-
+    
     @torch.inference_mode()
-    def inference(self, image: np.ndarray, instruction: str,unnorm_key: str = None) -> np.ndarray:
+    def inference(self, image: np.ndarray, instruction: str,unnorm_key: str = None,unnormalizer=None) -> np.ndarray:
         """
         Performs inference to get robotic actions based on an image and instruction.
 
         Args:
             image (np.ndarray): The input image as a NumPy array (H, W, C).
             instruction (str): The natural language instruction.
+            unnorm_key (str, optional): Key to select normalization statistics for unnormalizing actions.
+            unnormalizer (lerobot.policies.normalize.Unnormalize, optional): If a Lerobot Unnormalizer is provided, it will be used to unnormalize the action.
 
         Returns:
             np.ndarray: The predicted unnormalized robotic action array.
@@ -190,8 +220,11 @@ class Nora:
        
         output_action = self.fast_tokenizer.decode([generated_ids[0][start_idx] - self._ACTION_TOKEN_MIN])
         
-
-       # print("Normalized action (from token):", output_action) # output_action should be a numpy array here
+        if unnormalizer is not None: ## If a Lerobot Unnormalizer is provided, use it to unnormalize the action
+            #
+            unnormalized_action = unnormalizer({'action':output_action})
+            return unnormalized_action['action']
+       
 
         # --- Denormalize Action ---
         # Assuming output_action is a numpy array of shape (1, time_horizon, action_dim)

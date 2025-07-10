@@ -1,0 +1,12 @@
+torch==2.6.0
+transformers==4.50.0
+qwen_vl_utils
+torchvision==0.21.0
+accelerate==1.5.2
+wandb
+wheel
+flash-attn==2.6.1
+scipy
+pillow
+safetensors
+tqdm
