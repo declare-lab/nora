@@ -26,7 +26,6 @@ def normalize_gripper_action(action, binarize=True):
 
     return action
 
-
 def invert_gripper_action(action):
     """
     Flips the sign of the gripper action (last dimension of action vector).
@@ -139,7 +138,7 @@ class Nora:
         print("Model and processors loaded successfully.")
     
     @torch.inference_mode()
-    def inference(self, image: np.ndarray, instruction: str,unnorm_key: str = None,return_normalized=False) -> np.ndarray:
+    def inference(self, image: np.ndarray, instruction: str,unnorm_key: str = None,unnormalizer=None) -> np.ndarray:
         """
         Performs inference to get robotic actions based on an image and instruction.
 
@@ -147,7 +146,7 @@ class Nora:
             image (np.ndarray): The input image as a NumPy array (H, W, C).
             instruction (str): The natural language instruction.
             unnorm_key (str, optional): Key to select normalization statistics for unnormalizing actions.
-            return_unnorm_action (bool, optional): If True, returns the normalized action directly. This requires external unnormalization method.
+            unnormalizer (lerobot.policies.normalize.Unnormalize, optional): If a Lerobot Unnormalizer is provided, it will be used to unnormalize the action.
 
         Returns:
             np.ndarray: The predicted unnormalized robotic action array.
@@ -221,9 +220,10 @@ class Nora:
        
         output_action = self.fast_tokenizer.decode([generated_ids[0][start_idx] - self._ACTION_TOKEN_MIN])
         
-        if return_normalized:
-        # Return the normalized action directly
-            return output_action
+        if unnormalizer is not None: ## If a Lerobot Unnormalizer is provided, use it to unnormalize the action
+            #
+            unnormalized_action = unnormalizer({'action':output_action})
+            return unnormalized_action['action']
        
 
         # --- Denormalize Action ---
