@@ -34,7 +34,7 @@ import robosuite.utils.transform_utils as T
 import tqdm
 from libero.libero import benchmark
 
-from experiments.robot.libero.libero_utils import (
+from libero_utils import (
     get_libero_dummy_action,
     get_libero_env,
 )
@@ -80,7 +80,7 @@ def main(args):
 
     # Prepare JSON file to record success/false and initial states per episode
     metainfo_json_dict = {}
-    metainfo_json_out_path = f"./experiments/robot/libero/{args.libero_task_suite}_metainfo.json"
+    metainfo_json_out_path = f"./{args.libero_task_suite}_metainfo.json"
     with open(metainfo_json_out_path, "w") as f:
         # Just test that we can write to this file (we overwrite it later)
         json.dump(metainfo_json_dict, f)

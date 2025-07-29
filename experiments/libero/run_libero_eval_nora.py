@@ -18,7 +18,6 @@ Usage:
 """
 
 import os
-import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional, Union
@@ -26,12 +25,8 @@ from typing import Optional, Union
 import draccus
 import numpy as np
 import tqdm
-from experiments.robot.libero.libero import benchmark
-
 import wandb
-
-# Append current directory so that interpreter can find experiments.robot
-sys.path.append("../..")
+from libero.libero import benchmark
 from libero_utils import (
     get_libero_dummy_action,
     get_libero_env,
