@@ -1,0 +1,7 @@
+imageio[ffmpeg]
+robosuite
+bddl
+easydict
+cloudpickle
+gym
+
