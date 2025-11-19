@@ -1,5 +1,7 @@
 # NORA: Neural Orchestrator for Robotics Autonomy
 
+🎤 Announcing NORA-1.5: the new VLA model from the NORA family, achieving SOTA performance on several benchmarks. Check it out here: [https://github.com/declare-lab/nora-1.5](https://github.com/declare-lab/nora-1.5)
+
 🔥 All the eval scripts and model checkpoints have been released.
 
 🔥 Training scripts have been released.
