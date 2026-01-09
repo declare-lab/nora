@@ -149,5 +149,6 @@ This repository is built based on [OpenVLA](https://github.com/openvla/openvla),
       url={https://arxiv.org/abs/2504.19854}, 
 }
 ```
-
+## Questions
+Please email me at chiayu001 at e.ntu.edu.sg
 
